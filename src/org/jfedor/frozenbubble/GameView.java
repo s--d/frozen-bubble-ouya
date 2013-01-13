@@ -92,6 +92,8 @@ import android.view.View;
 import android.view.MotionEvent;
 import java.util.Vector;
 
+import tv.ouya.console.api.OuyaController;
+
 import android.util.Log;
 
 class GameView extends SurfaceView implements SurfaceHolder.Callback {
@@ -544,19 +546,21 @@ class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
         if (mMode == STATE_RUNNING) {
           //Log.i("frozen-bubble", "STATE RUNNING");
-          if (keyCode == KeyEvent.KEYCODE_DPAD_LEFT) {
+          if (keyCode == OuyaController.BUTTON_DPAD_LEFT) {
             mLeft = true;
             mWasLeft = true;
             return true;
-          } else if (keyCode == KeyEvent.KEYCODE_DPAD_RIGHT) {
+          } else if (keyCode == OuyaController.BUTTON_DPAD_RIGHT) {
             mRight = true;
             mWasRight = true;
             return true;
-          } else if (keyCode == KeyEvent.KEYCODE_DPAD_CENTER) {
+          } else if (keyCode == OuyaController.BUTTON_R1 ||
+        		  	  keyCode == OuyaController.BUTTON_O) {
             mFire = true;
             mWasFire = true;
             return true;
-          } else if (keyCode == KeyEvent.KEYCODE_DPAD_UP) {
+          } else if (keyCode == OuyaController.BUTTON_DPAD_UP ||            
+                      keyCode == OuyaController.BUTTON_L3) {
             mUp = true;
             mWasUp = true;
             return true;
@@ -571,16 +575,18 @@ class GameView extends SurfaceView implements SurfaceHolder.Callback {
     {
       synchronized (mSurfaceHolder) {
         if (mMode == STATE_RUNNING) {
-          if (keyCode == KeyEvent.KEYCODE_DPAD_LEFT) {
+          if (keyCode == OuyaController.BUTTON_DPAD_LEFT) {
             mLeft = false;
             return true;
-          } else if (keyCode == KeyEvent.KEYCODE_DPAD_RIGHT) {
+          } else if (keyCode == OuyaController.BUTTON_DPAD_RIGHT) {
             mRight = false;
             return true;
-          } else if (keyCode == KeyEvent.KEYCODE_DPAD_CENTER) {
+          } else if (keyCode == OuyaController.BUTTON_R1 ||
+    		  	      keyCode == OuyaController.BUTTON_O) {
             mFire = false;
             return true;
-          } else if (keyCode == KeyEvent.KEYCODE_DPAD_UP) {
+          } else if (keyCode == OuyaController.BUTTON_DPAD_UP ||
+                      keyCode == OuyaController.BUTTON_L3) {
             mUp = false;
             return true;
           }
@@ -597,8 +603,8 @@ class GameView extends SurfaceView implements SurfaceHolder.Callback {
         }
 
         if (mMode == STATE_RUNNING) {
-          if (event.getAction() == MotionEvent.ACTION_MOVE) {
-            mTrackballDX += event.getX() * TRACKBALL_COEFFICIENT;
+          if (event.getAction() == OuyaController.AXIS_LS_X) {
+            mTrackballDX += event.getAxisValue(OuyaController.AXIS_LS_X) * TRACKBALL_COEFFICIENT;
             return true;
           }
         }
@@ -740,8 +746,8 @@ class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
     private void updateGameState() {
       if (mFrozenGame.play(mLeft || mWasLeft, mRight || mWasRight,
-                           mFire || mUp || mWasFire || mWasUp || mTouchFire,
-                           mTrackballDX, mTouchDX)) {
+                           mFire || mWasFire || mTouchFire,
+                           mTrackballDX, mTouchDX, mUp || mWasUp)) {
         // Lost or won.  Need to start over.  The level is already
         // incremented if this was a win.
         mFrozenGame = new FrozenGame(mBackground, mBubbles, mBubblesBlind,

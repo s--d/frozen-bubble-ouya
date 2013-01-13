@@ -1,9 +1,19 @@
+Frozen Bubble v1.8
+==================
 
-The Android port of the Frozen Bubble game.  Developed with SDK v. 1.1_r1.
+An OUYA port of the Frozen Bubble game.  Developed with Android Developer 
+Tools v21.0.1-543035, and ODK v0.0.5.
+
 The code is based on the Java version of Frozen Bubble created by Glenn
 Sanson.  The original Frozen Bubble was created by Guillaume Cottenceau
 (programming), Alexis Younes and Amaury Amblard-Ladurantie (artwork) and
 Matthias Le Bidan (soundtrack).
+
+Note:  as currently configured, the external library paths expect the ODK
+to be installed in "/opt/OUYA-SDK" on a Linux (or possibly Mac OS X) 
+build machine.  If one chooses to build using Android tools on a Windows
+machine, or to install the ODK in a different location, will need to 
+properly include OUYA support libraries, per the ODK docs.
 
 The Android port, just like the original Frozen Bubble, is covered by
 GNU GPL v2.

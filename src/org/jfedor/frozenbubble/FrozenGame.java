@@ -537,7 +537,7 @@ public class FrozenGame extends GameScreen {
   }
 
   public boolean play(boolean key_left, boolean key_right, boolean key_fire,
-                      double trackball_dx, double touch_dx)
+                      double trackball_dx, double touch_dx, boolean key_center)
   {
     int[] move = new int[2];
 
@@ -545,9 +545,12 @@ public class FrozenGame extends GameScreen {
       move[HORIZONTAL_MOVE] = KEY_LEFT;
     } else if (key_right && !key_left) {
       move[HORIZONTAL_MOVE] = KEY_RIGHT;
+    } else if (key_center && !key_left && !key_right) {
+      move[HORIZONTAL_MOVE] = KEY_UP;
     } else {
       move[HORIZONTAL_MOVE] = 0;
     }
+
     if (key_fire) {
       move[FIRE] = KEY_UP;
     } else {
@@ -619,12 +622,18 @@ public class FrozenGame extends GameScreen {
         }
         dx += trackball_dx;
         dx += touch_dx;
+        if (move[HORIZONTAL_MOVE] == KEY_UP) {
+          dx = 0; 
+        }
         launchBubblePosition += dx;
         if (launchBubblePosition < 1) {
           launchBubblePosition = 1;
         }
         if (launchBubblePosition > 39) {
           launchBubblePosition = 39;
+        }
+        if (move[HORIZONTAL_MOVE] == KEY_UP) {
+          launchBubblePosition = 20;
         }
         launchBubble.changeDirection((int)launchBubblePosition);
         if (dx < 0) {
