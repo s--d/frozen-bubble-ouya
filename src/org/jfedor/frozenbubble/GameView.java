@@ -555,12 +555,12 @@ class GameView extends SurfaceView implements SurfaceHolder.Callback {
             mWasRight = true;
             return true;
           } else if (keyCode == OuyaController.BUTTON_R1 ||
-        		  	  keyCode == OuyaController.BUTTON_O) {
+                     keyCode == OuyaController.BUTTON_O) {
             mFire = true;
             mWasFire = true;
             return true;
           } else if (keyCode == OuyaController.BUTTON_DPAD_UP ||            
-                      keyCode == OuyaController.BUTTON_L3) {
+                     keyCode == OuyaController.BUTTON_L3) {
             mUp = true;
             mWasUp = true;
             return true;
@@ -582,11 +582,11 @@ class GameView extends SurfaceView implements SurfaceHolder.Callback {
             mRight = false;
             return true;
           } else if (keyCode == OuyaController.BUTTON_R1 ||
-    		  	      keyCode == OuyaController.BUTTON_O) {
+                     keyCode == OuyaController.BUTTON_O) {
             mFire = false;
             return true;
           } else if (keyCode == OuyaController.BUTTON_DPAD_UP ||
-                      keyCode == OuyaController.BUTTON_L3) {
+                     keyCode == OuyaController.BUTTON_L3) {
             mUp = false;
             return true;
           }
